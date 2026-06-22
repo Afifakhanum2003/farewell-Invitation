@@ -1,0 +1,248 @@
+<!doctype html>
+<html class="h-full">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Logout Ceremony</title>
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse-gold {
+  0%, 100% { box-shadow: 0 0 20px rgba(212,175,55,0.3); }
+  50% { box-shadow: 0 0 40px rgba(212,175,55,0.6); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+.shimmer-text {
+  background: linear-gradient(90deg, #d4af37, #f5e6a3, #d4af37, #b8860b, #d4af37);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 3s linear infinite;
+}
+.fade-in { animation: fadeInUp 0.8s ease forwards; }
+.fade-in-delay-1 { animation: fadeInUp 0.8s ease 0.2s forwards; opacity: 0; }
+.fade-in-delay-2 { animation: fadeInUp 0.8s ease 0.4s forwards; opacity: 0; }
+.fade-in-delay-3 { animation: fadeInUp 0.8s ease 0.6s forwards; opacity: 0; }
+.gold-btn {
+  background: linear-gradient(135deg, #d4af37, #f5e6a3, #d4af37);
+  animation: pulse-gold 2s infinite;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.gold-btn:hover { transform: scale(1.05); }
+.invitation-border {
+  border: 2px solid #d4af37;
+  box-shadow: inset 0 0 30px rgba(212,175,55,0.1), 0 0 30px rgba(212,175,55,0.2);
+}
+.corner-ornament::before, .corner-ornament::after {
+  content: '✦';
+  position: absolute;
+  color: #d4af37;
+  font-size: 1.5rem;
+}
+.corner-ornament::before { top: 10px; left: 15px; }
+.corner-ornament::after { top: 10px; right: 15px; }
+.float-icon {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Mobile & Desktop Responsive Fixes */
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+}
+img {
+  max-width: 100%;
+  height: auto;
+}
+@media (max-width: 768px) {
+  .shimmer-text { word-break: break-word; }
+  #page1 h1 { font-size: 3.5rem !important; }
+  #page1 h2 { font-size: 2rem !important; }
+  .float-icon { font-size: 1.5rem !important; }
+  #page2 .invitation-border { padding: 1.5rem !important; }
+  #displayName { font-size: 2rem !important; }
+  #page3 img { width: 100%; max-width: 100%; height: auto; }
+  #adminPage .invitation-border { padding: 1.5rem !important; }
+}
+@media (min-width: 1024px) {
+  #page2 .invitation-border,
+  #page3 .invitation-border,
+  #adminPage .invitation-border {
+    max-width: 900px;
+    margin: auto;
+  }
+  #page3 img {
+    max-height: 85vh;
+    object-fit: contain;
+  }
+}
+
+</style>
+</head>
+<body class="h-full bg-black text-yellow-500" style="font-family:'Playfair Display',serif;">
+
+<!-- PAGE 1: Registration -->
+<div id="page1" class="min-h-screen flex flex-col items-center justify-center px-4 py-12 relative">
+  <h1 class="shimmer-text text-6xl md:text-7xl font-black text-center fade-in-delay-1 tracking-wider">LOGOUT</h1>
+  <h2 class="shimmer-text text-3xl md:text-5xl font-bold text-center fade-in-delay-2 tracking-widest mt-1">CEREMONY</h2>
+  <p class="text-yellow-600/70 text-sm tracking-[0.3em] uppercase mt-4 fade-in-delay-2" style="font-family:'Cormorant Garamond',serif;">A Farewell to Remember</p>
+  
+  <div class="fade-in-delay-3 w-full max-w-sm mt-10">
+    <div class="invitation-border rounded-lg p-6 bg-black/80 backdrop-blur relative corner-ornament">
+      <label class="block text-yellow-600/80 text-xs tracking-[0.2em] uppercase mb-3 text-center" style="font-family:'Cormorant Garamond',serif;">Enter Your Name</label>
+      <input id="nameInput" type="text" placeholder="Your full name..." class="w-full bg-transparent border border-yellow-600/40 rounded px-4 py-3 text-yellow-100 text-center placeholder-yellow-600/30 focus:outline-none focus:border-yellow-500 focus:shadow-[0_0_15px_rgba(212,175,55,0.3)] transition-all" style="font-family:'Cormorant Garamond',serif; font-size:1.1rem;">
+      <button id="getStartedBtn" class="gold-btn w-full mt-5 py-3 rounded text-black font-bold tracking-wider text-sm uppercase">Get Started</button>
+      <p id="errorMsg" class="text-red-400 text-xs text-center mt-2 hidden">Please enter your name</p>
+    </div>
+  </div>
+  
+  <!-- Admin Lock Icon -->
+  <button id="adminLockBtn" class="absolute bottom-6 right-6 w-10 h-10 rounded-full border border-yellow-600/30 flex items-center justify-center hover:border-yellow-500 hover:bg-yellow-600/10 transition-all">
+    <i data-lucide="lock" class="w-5 h-5 text-yellow-600"></i>
+  </button>
+</div>
+
+<!-- PAGE 2: Quote Page -->
+<div id="page2" class="hidden min-h-screen flex flex-col items-center justify-center px-4 py-12 relative">
+  <div class="w-full max-w-2xl relative">
+    <!-- Floating Graduation Caps -->
+    <div class="absolute top-0 left-10 text-4xl float-icon" style="animation-delay: 0s;">🎓</div>
+    <div class="absolute top-20 right-10 text-3xl float-icon" style="animation-delay: 0.5s;">🎓</div>
+    <div class="absolute bottom-20 left-20 text-3xl float-icon" style="animation-delay: 1s;">🎉</div>
+    <div class="absolute bottom-10 right-20 text-4xl float-icon" style="animation-delay: 1.5s;">🎓</div>
+    <div class="absolute top-40 left-5 text-2xl float-icon" style="animation-delay: 0.3s;">✨</div>
+    <div class="absolute top-40 right-5 text-2xl float-icon" style="animation-delay: 0.8s;">✨</div>
+    
+    <div class="invitation-border rounded-xl p-8 md:p-10 bg-gradient-to-b from-black via-gray-950 to-black relative corner-ornament text-center">
+      <h1 id="displayName" class="text-yellow-100 text-3xl md:text-4xl font-bold mb-6" style="font-family:'Cormorant Garamond',serif;"></h1>
+      <p class="text-yellow-400 italic text-lg md:text-xl leading-relaxed mb-8 px-4">"The chapter may be ending, but the memories will last forever.
+
+Join us for a memorable Farewell Party as we celebrate your achievements, cherish the moments we've shared, and wish you a bright future ahead.
+
+Let's make this goodbye unforgettable! ✨🎓"</p>
+      <button id="getInvitationBtn" class="gold-btn w-full max-w-xs mx-auto py-3 rounded text-black font-bold tracking-wider text-sm uppercase">Get Invitation</button>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 3: Invitation Image -->
+<div id="page3" class="hidden min-h-screen flex flex-col items-center justify-center px-4 py-12">
+  <div class="w-full max-w-2xl">
+    <div class="invitation-border rounded-xl p-4 bg-black/80">
+      <img src="https://raw.githubusercontent.com/Afifakhanum2003/farewell-Invitation/refs/heads/main/invitation1.jpeg" alt="Logout Ceremony Invitation" class="w-full h-auto rounded-lg object-contain" id="invitationImage">
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN LOGIN MODAL -->
+<div id="adminModal" class="hidden fixed inset-0 bg-black/90 flex items-center justify-center px-4 z-50">
+  <div class="invitation-border rounded-xl p-8 bg-black max-w-md w-full text-center">
+    <h2 class="text-yellow-500 text-2xl font-bold mb-4">Admin Access</h2>
+    <input id="adminPassword" type="password" placeholder="Enter password..." class="w-full bg-transparent border border-yellow-600/40 rounded px-4 py-3 text-yellow-100 text-center placeholder-yellow-600/30 focus:outline-none focus:border-yellow-500 mb-4">
+    <button id="adminLoginBtn" class="gold-btn w-full py-3 rounded text-black font-bold tracking-wider text-sm uppercase">Login</button>
+    <p id="adminError" class="text-red-400 text-xs mt-2 hidden">Incorrect password</p>
+    <button id="closeAdminModal" class="mt-4 text-yellow-600/60 text-xs hover:text-yellow-400">Cancel</button>
+  </div>
+</div>
+
+<!-- ADMIN PAGE -->
+<div id="adminPage" class="hidden min-h-screen flex flex-col items-center justify-center px-4 py-12">
+  <div class="w-full max-w-lg invitation-border rounded-xl p-8 bg-black/80">
+    <h2 class="text-yellow-500 text-2xl font-bold mb-6 text-center">Registered Students</h2>
+    <div class="max-h-96 overflow-auto">
+      <ul id="nameList" class="text-yellow-100 space-y-2"></ul>
+    </div>
+    <button id="backToMain" class="mt-6 w-full text-yellow-600/60 text-sm tracking-widest uppercase hover:text-yellow-400 transition-colors">← Back to Home</button>
+  </div>
+</div>
+
+<script>
+let registeredNames = JSON.parse(localStorage.getItem('registeredNames')) || [];
+
+function showPage(id) {
+  ['page1', 'page2', 'page3', 'adminPage'].forEach(p => {
+    document.getElementById(p).classList.add('hidden');
+  });
+  document.getElementById(id).classList.remove('hidden');
+}
+
+// Page 1 -> Page 2
+document.getElementById('getStartedBtn').addEventListener('click', () => {
+  const name = document.getElementById('nameInput').value.trim();
+  const error = document.getElementById('errorMsg');
+  if (!name) {
+    error.classList.remove('hidden');
+    return;
+  }
+  error.classList.add('hidden');
+  registeredNames.push(name);
+  localStorage.setItem('registeredNames', JSON.stringify(registeredNames));
+  document.getElementById('displayName').textContent = `Dear ${name}`;
+  showPage('page2');
+});
+
+// Page 2 -> Page 3
+document.getElementById('getInvitationBtn').addEventListener('click', () => {
+  showPage('page3');
+});
+
+// Admin Lock Button
+document.getElementById('adminLockBtn').addEventListener('click', () => {
+  document.getElementById('adminModal').classList.remove('hidden');
+});
+
+// Close Admin Modal
+document.getElementById('closeAdminModal').addEventListener('click', () => {
+  document.getElementById('adminModal').classList.add('hidden');
+  document.getElementById('adminPassword').value = '';
+  document.getElementById('adminError').classList.add('hidden');
+});
+
+// Admin Login
+document.getElementById('adminLoginBtn').addEventListener('click', () => {
+  const password = document.getElementById('adminPassword').value;
+  if (password === 'admin123') {
+    document.getElementById('adminModal').classList.add('hidden');
+    const list = document.getElementById('nameList');
+    const stored = JSON.parse(localStorage.getItem('registeredNames')) || [];
+    list.innerHTML = stored.length ? 
+      stored.map((n,i)=>`<li class="border-b border-yellow-600/20 pb-2">${i+1}. ${n}</li>`).join('') : 
+      '<li class="text-yellow-600/40">No registrations yet</li>';
+    showPage('adminPage');
+    document.getElementById('adminPassword').value = '';
+    document.getElementById('adminError').classList.add('hidden');
+  } else {
+    document.getElementById('adminError').classList.remove('hidden');
+  }
+});
+
+// Admin Back Button
+document.getElementById('backToMain').addEventListener('click', () => {
+  showPage('page1');
+});
+
+// Enter key support
+document.getElementById('nameInput').addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') document.getElementById('getStartedBtn').click();
+});
+document.getElementById('adminPassword').addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') document.getElementById('adminLoginBtn').click();
+});
+
+// Initialize Lucide icons
+lucide.createIcons();
+</script>
+</body>
+</html>
